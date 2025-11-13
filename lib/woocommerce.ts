@@ -43,13 +43,13 @@ const WC_API_URL = process.env.NEXT_PUBLIC_WC_API_URL || 'https://upmos.com/wp-j
 const WC_CONSUMER_KEY = process.env.WC_CONSUMER_KEY || '';
 const WC_CONSUMER_SECRET = process.env.WC_CONSUMER_SECRET || '';
 
-// Create Basic Auth header
+// Create Basic Auth header (Node.js compatible)
 const getAuthHeader = () => {
   if (!WC_CONSUMER_KEY || !WC_CONSUMER_SECRET) {
     console.warn('WooCommerce API credentials not configured');
     return '';
   }
-  const credentials = btoa(`${WC_CONSUMER_KEY}:${WC_CONSUMER_SECRET}`);
+  const credentials = Buffer.from(`${WC_CONSUMER_KEY}:${WC_CONSUMER_SECRET}`).toString('base64');
   return `Basic ${credentials}`;
 };
 
